@@ -11,6 +11,8 @@
 
 static NSString *kCellID = @"CellIdentifier";
 
+#define YOUR_GOOGLE_MAPS_API_CONSUMER_KEY nil
+
 @interface ViewController ()
 @property (nonatomic, strong) NSArray *searchResults;
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -22,12 +24,9 @@ static NSString *kCellID = @"CellIdentifier";
 
 @implementation ViewController
 
-//AIzaSyBr29w35EVpNZSNy7MU1bqe-6Lp6NgrS78 - Epiclist
-//AIzaSyA4izLG3GJiWkMxfXWAmIJOW9Otu1CYvGg - Ignacio
-
 + (void)initialize
 {
-    [GMPlaceClient registerClientWithConsumerKey:@"AIzaSyBr29w35EVpNZSNy7MU1bqe-6Lp6NgrS78"];
+    [GMPlaceClient registerClientWithConsumerKey:YOUR_GOOGLE_MAPS_API_CONSUMER_KEY];
     [GMPlaceClient sharedClient].sensor = YES;
     [GMPlaceClient sharedClient].radius = 1000;
 }
@@ -144,12 +143,16 @@ static NSString *kCellID = @"CellIdentifier";
 {
     if (searchString.length > 2) {
         [GMPlaceClient sharedClient].userLocation = _userLocation.coordinate;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
         [[GMPlaceClient sharedClient] geocodedPlacesForName:searchString
                                                     success:^(NSArray *places){
                                                         [self setSearchResults:places];
+                                                        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                                                     }
                                                     failure:^(NSError *error){
                                                         NSLog(@"%s : %@",__FUNCTION__, error);
+                                                        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                                                     }];
         
 //        [[GMPlaceClient sharedClient] searchPlacesForName:searchString
@@ -243,5 +246,32 @@ static NSString *kCellID = @"CellIdentifier";
 {
     
 }
+
+
+#pragma mark - View lifeterm
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+}
+
+
+#pragma mark - View Auto-Rotation
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
 
 @end
