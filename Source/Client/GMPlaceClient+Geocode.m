@@ -30,8 +30,6 @@
         [params setObject:bounds forKey:@"bounds"];
     }
     
-    NSLog(@"params : %@",params);
-    
     [self getPath:path
        parameters:params
           success:^(AFHTTPRequestOperation *operation, id JSON){

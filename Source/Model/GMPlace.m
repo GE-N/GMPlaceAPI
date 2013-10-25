@@ -19,6 +19,8 @@
     if (dict) {
         self = [super init];
         
+//        NSLog(@"dict : %@", dict);
+        
         NSDictionary *geometry = [dict objectForKey:@"geometry"];
         NSDictionary *location = [geometry objectForKey:@"location"];
         float latitude = [[location objectForKey:@"lat"] doubleValue];
@@ -31,6 +33,18 @@
         }
         else if (parser == GMParserGeocode) {
             _name = [dict objectForKey:@"formatted_address"];
+            
+            NSArray *addressComponents = [dict objectForKey:@"address_components"];
+            for (NSDictionary *address in addressComponents) {
+                NSArray *types = [address objectForKey:@"types"];
+                
+                for (NSString *type in types) {
+                    if ([type isEqualToString:@"country"]) {
+                        _countryCode = [[address objectForKey:@"short_name"] lowercaseString];
+                        break;
+                    }
+                }
+            }
         }
 
         return self;
@@ -58,7 +72,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ <%f,%f> %@", [super description], self.location.latitude, self.location.longitude, self.name];
+    return [NSString stringWithFormat:@"%@ <%f,%f> %@ %@", [super description], self.location.latitude, self.location.longitude, self.name, self.countryCode];
 }
 
 @end

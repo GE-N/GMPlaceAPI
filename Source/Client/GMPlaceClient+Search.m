@@ -39,9 +39,7 @@
     
     NSString *radius = [NSString stringWithFormat:@"%d", self.radius];
     [params setObject:radius forKey:@"location"];
-    
-    NSLog(@"params : %@", params);
-    
+        
     [self getPath:path
        parameters:params
           success:^(AFHTTPRequestOperation *operation, id JSON){

@@ -14,5 +14,6 @@
 
 @property (nonatomic) CLLocationCoordinate2D location;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *countryCode;
 
 @end

@@ -26,12 +26,6 @@ typedef enum {
  */
 - (id)initWithObject:(NSDictionary *)dict withParser:(GMParser)parser;
 
-/** Returns a pretty printed string of all the receiver's attributes.
- *
- * @returns All the parsed attributes from the instance.
- */
-- (NSString *)attributes;
-
 @optional
 
 /**
