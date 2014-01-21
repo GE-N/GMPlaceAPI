@@ -9,5 +9,6 @@
 #import "GMPlaceClient.h"
 #import "GMPlaceClient+Search.h"
 #import "GMPlaceClient+Geocode.h"
+#import "GMPlaceClient+SearchBy.h"
 
 #import "GMPlace.h"
